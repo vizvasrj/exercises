@@ -5,7 +5,7 @@ import functools
 
 cache = dict()
 
-def memoize(function):
+def memorize(function):
     def safe_hash(args):
         '''
         In the case of unhashable types use the `repr()` to be hashable.
@@ -16,7 +16,7 @@ def memoize(function):
             return repr(args)
 
     @functools.wraps(function)
-    def _memoize(*args):
+    def _memorize(*args):
         # If the cache is not available, call the function
         # Note that all args need to be hashable
         # key = function, safe_hash(args)
@@ -25,10 +25,10 @@ def memoize(function):
             cache[key] = function(*args)
         return cache[key]
 
-    return _memoize
+    return _memorize
 
 
-@memoize
+@memorize
 def printer(*args):
     print(args)
 
@@ -37,7 +37,7 @@ def main():
     # Should work as expected
     printer('a', 'b', 'c')
 
-    # Would have issues with the original memoize function because the
+    # Would have issues with the original memorize function because the
     # parameters are unhashable
     printer(dict(a=1, b=2, c=3))
 
